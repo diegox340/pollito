@@ -16,8 +16,8 @@ suite('Functional Tests', function () {
         .keepOpen()
         .get('/hello')
         .end(function (err, res) {
-          assert.equal(res.status, 200, 'Response status should be 200');
-          assert.equal(res.text, 'hello Guest', 'Response should be "hello Guest"');
+          assert.equal(res.status, 200);
+          assert.equal(res.text, 'hello Guest');
           done();
         });
     });
@@ -29,8 +29,8 @@ suite('Functional Tests', function () {
         .keepOpen()
         .get('/hello?name=xy_z')
         .end(function (err, res) {
-          assert.equal(res.status, 200, 'Response status should be 200');
-          assert.equal(res.text, 'hello xy_z', 'Response should be "hello xy_z"');
+          assert.equal(res.status, 200);
+          assert.equal(res.text, 'hello xy_z');
           done();
         });
     });
@@ -70,7 +70,7 @@ suite('Functional Tests', function () {
 });
 
 const Browser = require('zombie');
-Browser.site = 'http://localhost:3000';
+Browser.site = 'https://tuusuario.repl.co'; // ⚠️ Reemplaza esto con tu URL pública real
 
 suite('Functional Tests with Zombie.js', function () {
   this.timeout(5000);
@@ -85,12 +85,12 @@ suite('Functional Tests with Zombie.js', function () {
   suite('"Famous Italian Explorers" form', function () {
     // #5
     test('Submit the surname "Colombo" in the HTML form', function (done) {
-      browser.fill('surname', 'Colombo').then(() => {
-        browser.pressButton('submit', () => {
+      browser.visit('/', function () {
+        browser.fill('surname', 'Colombo').pressButton('submit', function () {
           browser.assert.success();
           browser.assert.text('span#name', 'Cristoforo');
           browser.assert.text('span#surname', 'Colombo');
-          browser.assert.elements('span#dates', 1);
+          browser.assert.element('span#dates', 1);
           done();
         });
       });
@@ -109,3 +109,4 @@ suite('Functional Tests with Zombie.js', function () {
     });
   });
 });
+
